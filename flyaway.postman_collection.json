@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "17188ed4-2f47-4df0-b8d9-57e466eb7226",
+		"name": "flyaway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28970336"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "RegisterPage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/signup",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Your registration is confirmed\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/signupaction?email_id=user999@admin.com&pwd=admin&pwd2=admin&name=user999&address=user999 address&city=Chennai",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"signupaction"
+							],
+							"query": [
+								{
+									"key": "email_id",
+									"value": "user999@admin.com"
+								},
+								{
+									"key": "pwd",
+									"value": "admin"
+								},
+								{
+									"key": "pwd2",
+									"value": "admin"
+								},
+								{
+									"key": "name",
+									"value": "user999"
+								},
+								{
+									"key": "address",
+									"value": "user999 address"
+								},
+								{
+									"key": "city",
+									"value": "Chennai"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LoginPage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginAction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Logout\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/loginaction?email_id=admin@admin.com&pwd=admin",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"loginaction"
+					],
+					"query": [
+						{
+							"key": "email_id",
+							"value": "admin@admin.com"
+						},
+						{
+							"key": "pwd",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HomePage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/home",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchFlight",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resp= cheerio.load(responseBody);\r",
+							"// console.log(resp);\r",
+							"console.log(resp(\"a[href^='book']\").attr('href'));\r",
+							"\r",
+							"pm.collectionVariables.set(\"book_id\", resp(\"a[href^='book']\").attr('href'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/home?source=1&destination=11",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"home"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "1"
+						},
+						{
+							"key": "destination",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookFlight",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/{{book_id}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"{{book_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompleteBooking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/completepurchase",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"completepurchase"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:8080/FlyAway"
+		},
+		{
+			"key": "book_id",
+			"value": ""
+		}
+	]
+}
